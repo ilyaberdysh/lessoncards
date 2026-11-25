@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson Cards — карточки из уроков английского</title>
+<meta name="description" content="Приложение для Mac: записывает урок английского, расшифровывает его на вашем компьютере и делает из урока карточки.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <span class="brand">Lesson Cards</span>
+    <a class="btn btn-sm" href="#download">Скачать</a>
+  </div>
+</header>
+
+<main>
+<section class="hero wrap">
+  <p class="eyebrow">Для Mac на Apple Silicon</p>
+  <h1>Урок английского становится карточками</h1>
+  <p class="lead">Lesson Cards записывает ваш урок в Google Meet или другом приложении для звонков, расшифровывает его на Mac и собирает карточки из слов, которые прозвучали на уроке.</p>
+  <div class="cta">
+    <a class="btn btn-lg" href="https://github.com/ilyaberdysh/lessoncards/releases/latest/download/Lesson-Cards-arm64.dmg">Скачать для Mac</a>
+    <span class="note">Lesson-Cards-arm64.dmg · macOS 14.4 или новее</span>
+  </div>
+  <figure class="shot hero-shot">
+    <picture>
+      <source srcset="img/lesson-ready-dark.png" media="(prefers-color-scheme: dark)">
+      <img src="img/lesson-ready-light.png" width="1180" height="760" alt="Окно урока: расшифровка слева, карточки справа, слова из урока подсвечены">
+    </picture>
+  </figure>
+</section>
+
+<section class="wrap block" id="how">
+  <h2>Как это работает</h2>
+  <ol class="steps">
+    <li><h3>Запись</h3><p>Две дорожки: ваш голос и голос учителя. Запись идёт из Google Meet или другого приложения для звонков.</p></li>
+    <li><h3>Расшифровка</h3><p>Речь превращается в текст прямо на вашем Mac.</p></li>
+    <li><h3>Карточки</h3><p>В каждой карточке есть перевод, объяснение и пример из вашего урока.</p></li>
+  </ol>
+</section>
+
+<section class="wrap block split">
+  <div class="copy">
+    <h2>Карточки с моментом из урока</h2>
+    <p>Слова в расшифровке подсвечены. У каждой карточки есть пример из урока с временем, когда это прозвучало.</p>
+    <p>Слова можно взять и с экрана: нажмите ⌥S, и Lesson Cards возьмёт слова из субтитров.</p>
+  </div>
+  <figure class="shot"><img loading="lazy" src="img/cards-all-light.png" width="1180" height="760" alt="Список всех карточек с переводом, источником и уровнем знания"></figure>
+</section>
+
+<section class="wrap block split rev">
+  <div class="copy">
+    <h2>Повторение и тест</h2>
+    <p>Откройте карточку и отметьте «знаю» или «не знаю». Приложение повторяет слова с интервалами: то, что вы не знаете, возвращается раньше.</p>
+    <p>Для проверки есть тест: выберите перевод из четырёх вариантов.</p>
+  </div>
+  <div class="pair">
+    <figure class="shot"><img loading="lazy" src="img/review-front-light.png" width="1180" height="760" alt="Карточка для повторения со словом postpone"></figure>
+    <figure class="shot"><img loading="lazy" src="img/quiz-light.png" width="1180" height="760" alt="Тест: выберите перевод слова reliable"></figure>
+  </div>
+</section>
+
+<section class="wrap block">
+  <h2>Свои слова и экспорт</h2>
+  <div class="cols">
+    <div><h3>Импорт</h3><p>Загрузите список слов из PDF, CSV, XLSX и похожих файлов, и он станет карточками.</p></div>
+    <div><h3>Экспорт</h3><p>Карточки можно выгрузить в Quizlet и в Anki.</p></div>
+  </div>
+</section>
+
+<section class="wrap block privacy">
+  <h2>Приватность</h2>
+  <p class="big">Звук урока не покидает ваш Mac.</p>
+  <ul class="plain">
+    <li>Расшифровка работает локально на компьютере.</li>
+    <li>В OpenAI уходит только текст, чтобы сделать карточки.</li>
+    <li>Нужен ваш собственный ключ OpenAI. Он хранится у вас на Mac.</li>
+  </ul>
+</section>
+
+<section class="wrap block" id="download">
+  <h2>Скачать</h2>
+  <div class="dl">
+    <div>
+      <h3>Требования</h3>
+      <ul class="plain">
+        <li>Mac с чипом Apple Silicon</li>
+        <li>macOS 14.4 или новее</li>
+        <li>Ключ OpenAI</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Установка</h3>
+      <ol class="plain num">
+        <li>Откройте файл Lesson-Cards-arm64.dmg.</li>
+        <li>Перетащите Lesson Cards в папку «Программы».</li>
+        <li>Запустите приложение и дайте нужные разрешения, когда оно попросит.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="cta">
+    <a class="btn btn-lg" href="https://github.com/ilyaberdysh/lessoncards/releases/latest/download/Lesson-Cards-arm64.dmg">Скачать для Mac</a>
+    <a class="link" href="https://github.com/ilyaberdysh/lessoncards/releases">Все версии</a>
+  </div>
+</section>
+</main>
+
+<footer class="wrap foot">Lesson Cards · личный проект Ильи Бердыша</footer>
+</body>
+</html>

@@ -1,0 +1,328 @@
+/*
+ * Lesson Cards — design tokens
+ * Source of truth: handoffs/design/DESIGN.md
+ * Framework-agnostic. Import once in the Electron renderer:
+ *   @import "./tokens.css";
+ * Light is the default. Dark follows prefers-color-scheme (Electron nativeTheme).
+ * [data-theme="light" | "dark"] on <html> forces a theme (tests, screenshots).
+ * Units: CSS px equal macOS points in Electron.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* ---------- Type ---------- */
+  --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Helvetica Neue", sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Helvetica Neue", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+
+  /* size / line-height / tracking / weight. Tracking tightens as size grows. */
+  --text-display-size: 34px;  --text-display-line: 40px;  --text-display-track: -0.022em; --text-display-weight: 700;
+  --text-title1-size: 26px;   --text-title1-line: 32px;   --text-title1-track: -0.019em;  --text-title1-weight: 700;
+  --text-title2-size: 20px;   --text-title2-line: 26px;   --text-title2-track: -0.014em;  --text-title2-weight: 600;
+  --text-title3-size: 15px;   --text-title3-line: 20px;   --text-title3-track: -0.006em;  --text-title3-weight: 600;
+  --text-reading-size: 15px;  --text-reading-line: 23px;  --text-reading-track: -0.004em; --text-reading-weight: 400;
+  --text-body-size: 13px;     --text-body-line: 18px;     --text-body-track: -0.003em;    --text-body-weight: 400;
+  --text-callout-size: 12px;  --text-callout-line: 16px;  --text-callout-track: 0em;      --text-callout-weight: 400;
+  --text-caption-size: 11px;  --text-caption-line: 14px;  --text-caption-track: 0.006em;  --text-caption-weight: 500;
+  --text-mono-size: 12px;     --text-mono-line: 16px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ---------- Spacing (4 px grid) ---------- */
+  --space-0: 0px;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 6px;
+  --space-4: 8px;
+  --space-5: 12px;
+  --space-6: 16px;
+  --space-7: 20px;
+  --space-8: 24px;
+  --space-9: 32px;
+  --space-10: 40px;
+  --space-11: 48px;
+  --space-12: 64px;
+
+  /* ---------- Layout ---------- */
+  --window-min-width: 900px;
+  --window-min-height: 600px;
+  --window-default-width: 1180px;
+  --window-default-height: 760px;
+  --titlebar-height: 52px;
+  --sidebar-width: 232px;
+  --sidebar-min-width: 200px;
+  --sidebar-max-width: 300px;
+  --content-padding-x: 40px;
+  --reading-measure: 640px;
+  --cards-column-width: 360px;
+  --row-height: 44px;
+  --sidebar-row-height: 28px;
+  --control-height: 28px;
+  --control-height-large: 36px;
+  --hud-height: 48px;
+
+  /* ---------- Radii (hierarchy, not one radius everywhere) ---------- */
+  --radius-xs: 4px;      /* chips, keycaps, highlights */
+  --radius-sm: 6px;      /* buttons, fields, sidebar rows */
+  --radius-md: 8px;      /* list rows, menus, popovers */
+  --radius-lg: 12px;     /* panels, cards in lists, settings groups */
+  --radius-xl: 18px;     /* review card, sheets */
+  --radius-window: 14px; /* reference only; macOS draws the window */
+  --radius-pill: 999px;  /* recording HUD and progress tracks only */
+
+  /* ---------- Motion ---------- */
+  /* Critically damped spring (damping 1.0), as a CSS linear() curve. Shape is the same for every response; duration sets response. */
+  --ease-spring: linear(0, 0.0491, 0.1571, 0.2847, 0.4107, 0.5249, 0.6232, 0.705, 0.7714, 0.8244, 0.8661, 0.8985, 0.9234, 0.9425, 0.957, 0.968, 0.9762, 0.9824, 0.987, 0.9904, 1);
+  /* Damping 0.8, response 0.35 s. Only after a gesture with momentum (drag release). */
+  --ease-spring-bouncy: linear(0, 0.0484, 0.161, 0.3007, 0.4438, 0.576, 0.6903, 0.7841, 0.8575, 0.9128, 0.9525, 0.9798, 0.9973, 1.0078, 1.0131, 1.015, 1.0148, 1.0134, 1.0114, 1.0092, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-standard: ease;
+
+  --dur-press: 100ms;        /* :active scale */
+  --dur-fast: 150ms;         /* hover, color, chip state */
+  --dur-base: 200ms;         /* popover, row insert, feedback */
+  --dur-spring-fast: 280ms;  /* spring, response 0.25 s: flip, HUD state */
+  --dur-spring: 390ms;       /* spring, response 0.35 s: sheet, window-level panel */
+  --dur-exit: 160ms;         /* exits are faster than entries */
+  --dur-highlight: 1600ms;   /* fade of "jump to moment" highlight */
+
+  --press-scale: 0.97;
+  --enter-scale: 0.97;
+  --stagger: 40ms;           /* max 8 staggered items */
+
+  /* ---------- Materials ---------- */
+  --blur-sidebar: 30px;
+  --blur-hud: 24px;
+  --blur-popover: 20px;
+  --saturate-material: 180%;
+
+  /* ---------- Z layers ---------- */
+  --z-toolbar: 10;
+  --z-popover: 30;
+  --z-sheet: 40;
+  --z-toast: 50;
+
+  /* =========================================================
+     LIGHT
+     ========================================================= */
+  --bg-window: #ffffff;
+  --bg-sidebar: rgba(240, 239, 237, 0.74);
+  --bg-sidebar-solid: #eeedeb;
+  --bg-elevated: #ffffff;
+  --bg-inset: #f4f4f3;
+  --bg-hover: rgba(0, 0, 0, 0.045);
+  --bg-pressed: rgba(0, 0, 0, 0.08);
+  --bg-selected: rgba(0, 0, 0, 0.075);
+  --bg-selected-strong: rgba(0, 104, 218, 0.12);
+  --bg-hud: rgba(250, 250, 249, 0.78);
+  --bg-scrim: rgba(0, 0, 0, 0.18);
+  --bg-keycap: #ffffff;
+
+  --text-primary: #1d1d1f;
+  --text-secondary: #5f5f65;
+  --text-tertiary: #737379;
+  --text-on-accent: #ffffff;
+  --text-placeholder: #737379;
+
+  --separator: rgba(0, 0, 0, 0.085);
+  --separator-strong: rgba(0, 0, 0, 0.14);
+  --border-control: rgba(0, 0, 0, 0.12);
+  --focus-ring: rgba(0, 104, 218, 0.45);
+
+  --accent: #0068da;
+  --accent-hover: #005ec5;
+  --accent-pressed: #0054b0;
+  --accent-text: #0062cc;
+  --accent-tint: rgba(0, 104, 218, 0.1);
+
+  --know: #1f7a35;
+  --know-fill: #248a3d;
+  --know-tint: rgba(52, 199, 89, 0.14);
+  --dontknow: #b04600;
+  --dontknow-fill: #c75100;
+  --dontknow-tint: rgba(255, 149, 0, 0.15);
+  --record: #e0352b;
+  --record-tint: rgba(224, 53, 43, 0.12);
+  --record-text: #c4291f;
+  --error: #c4291f;
+  --error-tint: rgba(224, 53, 43, 0.1);
+  --progress: #0068da;
+
+  --speaker-natasha: #b4285f;
+  --speaker-natasha-tint: rgba(180, 40, 95, 0.08);
+  --speaker-teacher: #0d727a;
+  --speaker-teacher-tint: rgba(13, 114, 122, 0.08);
+
+  --marker: rgba(255, 204, 0, 0.32);   /* term in transcript that became a card */
+  --marker-strong: rgba(255, 196, 0, 0.55);
+  --moment-highlight: rgba(0, 104, 218, 0.1);
+
+  --shadow-row: none;
+  --shadow-card: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-review-card: 0 0 0 0.5px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.08);
+  --shadow-popover: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 8px 28px rgba(0, 0, 0, 0.14);
+  --shadow-sheet: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 24px 64px rgba(0, 0, 0, 0.2);
+  --shadow-hud: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 10px 30px rgba(0, 0, 0, 0.16);
+  --shadow-button: 0 0 0 0.5px rgba(0, 0, 0, 0.14), 0 1px 1.5px rgba(0, 0, 0, 0.06);
+  --highlight-top: inset 0 0.5px 0 rgba(255, 255, 255, 0.7);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-window: #1e1e1f;
+    --bg-sidebar: rgba(38, 38, 40, 0.62);
+    --bg-sidebar-solid: #262628;
+    --bg-elevated: #2a2a2c;
+    --bg-inset: #262628;
+    --bg-hover: rgba(255, 255, 255, 0.06);
+    --bg-pressed: rgba(255, 255, 255, 0.1);
+    --bg-selected: rgba(255, 255, 255, 0.09);
+    --bg-selected-strong: rgba(64, 156, 255, 0.2);
+    --bg-hud: rgba(40, 40, 42, 0.74);
+    --bg-scrim: rgba(0, 0, 0, 0.38);
+    --bg-keycap: #3a3a3c;
+
+    --text-primary: #ececee;
+    --text-secondary: #a1a1a7;
+    --text-tertiary: #87878d;
+    --text-on-accent: #ffffff;
+    --text-placeholder: #87878d;
+
+    --separator: rgba(255, 255, 255, 0.085);
+    --separator-strong: rgba(255, 255, 255, 0.14);
+    --border-control: rgba(255, 255, 255, 0.12);
+    --focus-ring: rgba(64, 156, 255, 0.55);
+
+    --accent: #1a74e0;
+    --accent-hover: #2a80e8;
+    --accent-pressed: #1468cc;
+    --accent-text: #5aaaff;
+    --accent-tint: rgba(64, 156, 255, 0.16);
+
+    --know: #4cd474;
+    --know-fill: #1f8a3c;
+    --know-tint: rgba(48, 209, 88, 0.16);
+    --dontknow: #ffb340;
+    --dontknow-fill: #c25700;
+    --dontknow-tint: rgba(255, 159, 10, 0.16);
+    --record: #ff453a;
+    --record-tint: rgba(255, 69, 58, 0.18);
+    --record-text: #ff6961;
+    --error: #ff6961;
+    --error-tint: rgba(255, 69, 58, 0.14);
+    --progress: #4aa0ff;
+
+    --speaker-natasha: #ff7eac;
+    --speaker-natasha-tint: rgba(255, 126, 172, 0.1);
+    --speaker-teacher: #5cc8d0;
+    --speaker-teacher-tint: rgba(92, 200, 208, 0.1);
+
+    --marker: rgba(255, 214, 10, 0.2);
+    --marker-strong: rgba(255, 214, 10, 0.36);
+    --moment-highlight: rgba(64, 156, 255, 0.16);
+
+    --shadow-card: 0 0 0 0.5px rgba(255, 255, 255, 0.07), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-review-card: 0 0 0 0.5px rgba(255, 255, 255, 0.08), 0 12px 40px rgba(0, 0, 0, 0.45);
+    --shadow-popover: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 10px 32px rgba(0, 0, 0, 0.5);
+    --shadow-sheet: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 28px 72px rgba(0, 0, 0, 0.6);
+    --shadow-hud: 0 0 0 0.5px rgba(255, 255, 255, 0.12), 0 10px 30px rgba(0, 0, 0, 0.5);
+    --shadow-button: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 1px 1.5px rgba(0, 0, 0, 0.3);
+    --highlight-top: inset 0 0.5px 0 rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Forced dark: same values as the media query above. Keep the two blocks in sync. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-window: #1e1e1f;
+  --bg-sidebar: rgba(38, 38, 40, 0.62);
+  --bg-sidebar-solid: #262628;
+  --bg-elevated: #2a2a2c;
+  --bg-inset: #262628;
+  --bg-hover: rgba(255, 255, 255, 0.06);
+  --bg-pressed: rgba(255, 255, 255, 0.1);
+  --bg-selected: rgba(255, 255, 255, 0.09);
+  --bg-selected-strong: rgba(64, 156, 255, 0.2);
+  --bg-hud: rgba(40, 40, 42, 0.74);
+  --bg-scrim: rgba(0, 0, 0, 0.38);
+  --bg-keycap: #3a3a3c;
+  --text-primary: #ececee;
+  --text-secondary: #a1a1a7;
+  --text-tertiary: #87878d;
+  --text-on-accent: #ffffff;
+  --text-placeholder: #87878d;
+  --separator: rgba(255, 255, 255, 0.085);
+  --separator-strong: rgba(255, 255, 255, 0.14);
+  --border-control: rgba(255, 255, 255, 0.12);
+  --focus-ring: rgba(64, 156, 255, 0.55);
+  --accent: #1a74e0;
+  --accent-hover: #2a80e8;
+  --accent-pressed: #1468cc;
+  --accent-text: #5aaaff;
+  --accent-tint: rgba(64, 156, 255, 0.16);
+  --know: #4cd474;
+  --know-fill: #1f8a3c;
+  --know-tint: rgba(48, 209, 88, 0.16);
+  --dontknow: #ffb340;
+  --dontknow-fill: #c25700;
+  --dontknow-tint: rgba(255, 159, 10, 0.16);
+  --record: #ff453a;
+  --record-tint: rgba(255, 69, 58, 0.18);
+    --record-text: #ff6961;
+  --error: #ff6961;
+  --error-tint: rgba(255, 69, 58, 0.14);
+  --progress: #4aa0ff;
+  --speaker-natasha: #ff7eac;
+  --speaker-natasha-tint: rgba(255, 126, 172, 0.1);
+  --speaker-teacher: #5cc8d0;
+  --speaker-teacher-tint: rgba(92, 200, 208, 0.1);
+  --marker: rgba(255, 214, 10, 0.2);
+  --marker-strong: rgba(255, 214, 10, 0.36);
+  --moment-highlight: rgba(64, 156, 255, 0.16);
+  --shadow-card: 0 0 0 0.5px rgba(255, 255, 255, 0.07), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-review-card: 0 0 0 0.5px rgba(255, 255, 255, 0.08), 0 12px 40px rgba(0, 0, 0, 0.45);
+  --shadow-popover: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 10px 32px rgba(0, 0, 0, 0.5);
+  --shadow-sheet: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 28px 72px rgba(0, 0, 0, 0.6);
+  --shadow-hud: 0 0 0 0.5px rgba(255, 255, 255, 0.12), 0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow-button: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 1px 1.5px rgba(0, 0, 0, 0.3);
+  --highlight-top: inset 0 0.5px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Electron with native vibrancy (BrowserWindow vibrancy: "sidebar"): the OS draws the material, so the sidebar paints nothing. */
+:root[data-vibrancy="native"] { --bg-sidebar: transparent; --blur-sidebar: 0px; }
+
+/* ---------- Accessibility fallbacks ---------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ease-spring: ease;
+    --ease-spring-bouncy: ease;
+    --dur-spring-fast: 150ms;
+    --dur-spring: 180ms;
+    --dur-highlight: 1600ms;
+    --press-scale: 1;
+    --enter-scale: 1;
+    --stagger: 0ms;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root { --bg-sidebar: var(--bg-sidebar-solid); --bg-hud: var(--bg-elevated); --blur-sidebar: 0px; --blur-hud: 0px; --blur-popover: 0px; }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --separator: rgba(0, 0, 0, 0.22);
+    --border-control: rgba(0, 0, 0, 0.35);
+    --text-secondary: #46464b;
+    --text-tertiary: #5f5f65;
+  }
+  :root[data-theme="dark"] { --separator: rgba(255, 255, 255, 0.24); --border-control: rgba(255, 255, 255, 0.36); --text-secondary: #c4c4c9; --text-tertiary: #a1a1a7; }
+}
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --separator: rgba(255, 255, 255, 0.24); --border-control: rgba(255, 255, 255, 0.36); --text-secondary: #c4c4c9; --text-tertiary: #a1a1a7; }
+}
